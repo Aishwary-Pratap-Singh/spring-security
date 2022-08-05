@@ -2,10 +2,11 @@ package com.example.springsecsection2.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
-public class CardsController {
 
-    @GetMapping("/myCards")
+public class ContactController {
+    @GetMapping("/contact")
     public String saveContactInquiryDetails(String input){
-        return "Card details from  DB" ;
+        return "Inquiry details saved to DB" ;
     }
+
 }
