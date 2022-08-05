@@ -1,12 +1,24 @@
 package com.example.springsecsection2.Config;
 
+import org.springframework.cglib.proxy.NoOp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Configuration
-public class ProjectSecurityConfig  {
+public class ProjectSecurityConfig   {
     /**
      *
      * /myAccount - secured
@@ -26,7 +38,6 @@ public class ProjectSecurityConfig  {
                 .antMatchers("/myBalance").authenticated()
                 .antMatchers("/myCards").authenticated()
                 .antMatchers("/myLoans").authenticated()
-
                 .antMatchers("/notices").permitAll()
                 .antMatchers("/contact").permitAll()
 
@@ -35,4 +46,29 @@ public class ProjectSecurityConfig  {
                 .httpBasic();
         return http.build();
     }
-}
+
+//    Configuring multiple users
+
+    @Bean
+    public InMemoryUserDetailsManager adminDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("12345")
+                .roles("USER")
+                .build();
+
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("12345")
+                .roles("ADMIN")
+                .build();
+        Collection<UserDetails>arr = new ArrayList<>();
+        arr.add(user);
+        arr.add(admin);
+        return new InMemoryUserDetailsManager(arr);
+    }
+
+
+
+
+    }
