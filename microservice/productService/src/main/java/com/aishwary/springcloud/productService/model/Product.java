@@ -1,9 +1,6 @@
 package com.aishwary.springcloud.productService.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,9 +12,19 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
+    @Transient
+    public String couponCode;
 
     public Long getId() {
         return id;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
     }
 
     public void setId(Long id) {

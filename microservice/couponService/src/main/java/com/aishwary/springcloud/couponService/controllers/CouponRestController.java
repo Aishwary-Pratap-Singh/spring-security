@@ -13,12 +13,12 @@ public class CouponRestController {
     CouponRepo repo;
 
 
-    @RequestMapping(value = "/coupons", method = RequestMethod.POST)
+    @PostMapping(value = "/coupons")
     public Coupon create(@RequestBody Coupon coupon){
         return repo.save(coupon);
     }
 
-    @RequestMapping(value = "/coupons/{code}", method = RequestMethod.GET)
+    @GetMapping(value = "/coupons/{code}")
     public Coupon getCoupon(@PathVariable("code") String code){
         return repo.findByCode(code);
     }
